@@ -1,0 +1,20 @@
+.burger {
+  float: left;
+  height: 36px;
+  width: 36px;
+  position: relative;
+  display: block; }
+  .burger .parts {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 16%;
+    background-color: black;
+    left: 0;
+    background-color: white; }
+  .burger .top {
+    top: 0%; }
+  .burger .middle {
+    top: 33.3%; }
+  .burger .bottom {
+    top: 66.6%; }

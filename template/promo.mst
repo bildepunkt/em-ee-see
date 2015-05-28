@@ -1,0 +1,6 @@
+<div class="promo">
+    <a href="{{web_url}}" target="{{}}">
+        <h4>{{label}}</h4>
+        <img src="{{image_url}}" alt="">
+    </a>
+</div>

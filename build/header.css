@@ -1,0 +1,20 @@
+header #logo {
+  float: left; }
+header #menu-bar {
+  width: 100%;
+  float: right;
+  height: 100px;
+  background-color: black;
+  margin-left: -100px; }
+  header #menu-bar #menu {
+    cursor: pointer;
+    margin: 36px 36px 0;
+    float: right; }
+
+@media screen and (max-width: 768px) {
+  #menu {
+    display: block; } }
+
+@media screen and (min-width: 769px) {
+  #menu {
+    display: none; } }
