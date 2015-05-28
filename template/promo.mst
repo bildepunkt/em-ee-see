@@ -1,6 +1,6 @@
 <div class="promo">
-    <a href="{{web_url}}" target="{{}}">
-        <h4>{{label}}</h4>
+    <a href="{{web_url}}" target="{{open_new_tab}}">
         <img src="{{image_url}}" alt="">
+        <h4>{{label}}</h4>
     </a>
 </div>

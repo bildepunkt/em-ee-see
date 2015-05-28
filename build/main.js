@@ -1,6 +1,23 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var jQuery = $ = require('jquery');
-var Promo = require('./view/promo');
+
+var PromoMenu = function() {
+    this.$el = $('#promo-menu');
+    this.$promotions = $('#promotions');
+
+    this.$el.on('click', $.proxy(this.clickHandler, this));
+};
+
+PromoMenu.prototype.clickHandler = function(e) {
+    this.$promotions.toggleClass('visible');
+};
+
+module.exports = PromoMenu;
+},{"jquery":5}],2:[function(require,module,exports){
+var jQuery = $ = require('jquery');
+var PromoView = require('./view/promo');
+var PromotionsView = require('./view/promotions');
+var PromoMenuController = require('./controller/promo-menu');
 
 $(document).ready(function() {
     var $target = $('#promotions');
@@ -16,27 +33,38 @@ $(document).ready(function() {
         }
     });
 
+    new PromoMenuController();
+
     $.get('./template/promo.mst', function(data) {
         template = data;
     });
 
     $.get('http://mec.ca/api/v1/shop/promotions', function(data) {
+        // remove loading
+        $target.html('');
+
         for(var i = 0, len = data.promotions.length; i < len; i += 1) {
             promoData = data.promotions[i];
-            new Promo(template, promoData).render($target);
+            console.log(promoData);
+            new PromoView(template, promoData).render($target);
         }
+
+        // after .promos have populated
+        new PromotionsView();
     });
+
 });
-},{"./view/promo":2,"jquery":3}],2:[function(require,module,exports){
+},{"./controller/promo-menu":1,"./view/promo":3,"./view/promotions":4,"jquery":5}],3:[function(require,module,exports){
 var jQuery = $ = require('jquery');
 var Mustache = require('mustache');
 
 /**
- * @class View
+ * @class Promo
  * @param {string} template - the template markup
  * @param {object} data - the data
  */
-var View = function(template, data) {
+var Promo = function(template, data) {
+    data.open_new_tab = data.open_new_tab ? '_blank' : '';
     this.rendered = Mustache.render(template, data);
 };
 
@@ -44,12 +72,79 @@ var View = function(template, data) {
  * @method render
  * @param {object} $target - the jQuery wrapped object
  */
-View.prototype.render = function($target) {
+Promo.prototype.render = function($target) {
     $target.append(this.rendered);
 }
 
-module.exports = View;
-},{"jquery":3,"mustache":4}],3:[function(require,module,exports){
+module.exports = Promo;
+},{"jquery":5,"mustache":6}],4:[function(require,module,exports){
+var jQuery = $ = require('jquery');
+
+/**
+ * @class View
+ * @param {string} template - the template markup
+ * @param {object} data - the data
+ */
+var $win = $(window);
+
+var Promotions = function() {
+    this.$el = $('#promotions');
+    this.$promos = this.$el.find('.promo');
+    this.desktopLogoSize = 148;
+    this.promoCount = this.$promos.length;
+
+    $win.on('resize', $.proxy(this.resizeHandler, this));
+
+    this.resizeHandler();
+};
+
+Promotions.prototype.resizeHandler = function() {
+    var self = this;
+    var winWidth = $win.width();
+    var promotionsWidth;
+    var promoWidth;
+    var $this;
+    var $img;
+    var img;
+    var scaleFactor;
+
+    this.$el.hide();
+
+    if (winWidth < 768) {
+        this.$promos.each(function() {
+            $(this).css('width', '100%');
+        });
+    } else {
+        promotionsWidth = winWidth - this.desktopLogoSize;
+        promoWidth = promotionsWidth / this.promoCount;
+
+        this.$promos.each(function() {
+            $this = $(this);
+            $this.css('width', promoWidth + 'px');
+
+            $img = $this.find('img');
+            img = $img[0];
+            if (img.width === 0) {
+                img.onload = function() {
+                    this.width = promoWidth;
+                };
+            } else {
+                self.setImageDimensions($img, promoWidth);
+            }
+        });
+    }
+
+    this.$el.fadeIn('fast');
+};
+
+Promotions.prototype.setImageDimensions = function($img, promoWidth) {
+    $img.attr({
+        width: promoWidth
+    });
+};
+
+module.exports = Promotions;
+},{"jquery":5}],5:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.3
  * http://jquery.com/
@@ -9256,7 +9351,7 @@ return jQuery;
 
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*!
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
@@ -9859,4 +9954,4 @@ return jQuery;
 
 }));
 
-},{}]},{},[1])
+},{}]},{},[2])

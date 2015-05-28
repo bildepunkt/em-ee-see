@@ -4,6 +4,7 @@
     width: 36px;
     position: relative;
     display: block;
+    transform: scale(1);
 
     .parts {
         position: absolute;
@@ -26,4 +27,9 @@
     .bottom {
         top: 66.6%
     }
+}
+
+.burger:active {
+    transition: all .3s;
+    transform: scale(1.2);
 }

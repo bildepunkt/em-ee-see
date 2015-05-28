@@ -1,20 +1,25 @@
 header #logo {
-  float: left; }
+  float: left;
+  width: 100px;
+  height: 100px; }
 header #menu-bar {
   width: 100%;
-  float: right;
-  height: 100px;
-  background-color: black;
-  margin-left: -100px; }
-  header #menu-bar #menu {
+  background-color: black; }
+  header #menu-bar #promo-menu {
     cursor: pointer;
     margin: 36px 36px 0;
     float: right; }
 
 @media screen and (max-width: 768px) {
-  #menu {
+  #menu-bar {
+    height: 100px; }
+  #promo-menu {
     display: block; } }
 
 @media screen and (min-width: 769px) {
-  #menu {
+  #logo {
+    padding: 24px; }
+  #menu-bar {
+    height: 148px; }
+  #promo-menu {
     display: none; } }

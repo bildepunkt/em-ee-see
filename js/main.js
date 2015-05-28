@@ -1,5 +1,7 @@
 var jQuery = $ = require('jquery');
-var Promo = require('./view/promo');
+var PromoView = require('./view/promo');
+var PromotionsView = require('./view/promotions');
+var PromoMenuController = require('./controller/promo-menu');
 
 $(document).ready(function() {
     var $target = $('#promotions');
@@ -15,14 +17,24 @@ $(document).ready(function() {
         }
     });
 
+    new PromoMenuController();
+
     $.get('./template/promo.mst', function(data) {
         template = data;
     });
 
     $.get('http://mec.ca/api/v1/shop/promotions', function(data) {
+        // remove loading
+        $target.html('');
+
         for(var i = 0, len = data.promotions.length; i < len; i += 1) {
             promoData = data.promotions[i];
-            new Promo(template, promoData).render($target);
+            console.log(promoData);
+            new PromoView(template, promoData).render($target);
         }
+
+        // after .promos have populated
+        new PromotionsView();
     });
+
 });

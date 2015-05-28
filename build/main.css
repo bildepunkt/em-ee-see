@@ -3,7 +3,9 @@
   height: 36px;
   width: 36px;
   position: relative;
-  display: block; }
+  display: block;
+  -webkit-transform: scale(1);
+  transform: scale(1); }
   .burger .parts {
     position: absolute;
     display: block;
@@ -19,30 +21,82 @@
   .burger .bottom {
     top: 66.6%; }
 
+.burger:active {
+  transition: all .3s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2); }
+
 header #logo {
-  float: left; }
+  float: left;
+  width: 100px;
+  height: 100px; }
 header #menu-bar {
   width: 100%;
-  float: right;
-  height: 100px;
-  background-color: black;
-  margin-left: -100px; }
-  header #menu-bar #menu {
+  background-color: black; }
+  header #menu-bar #promo-menu {
     cursor: pointer;
     margin: 36px 36px 0;
     float: right; }
 
 @media screen and (max-width: 768px) {
-  #menu {
+  #menu-bar {
+    height: 100px; }
+  #promo-menu {
     display: block; } }
 
 @media screen and (min-width: 769px) {
-  #menu {
+  #logo {
+    padding: 24px; }
+  #menu-bar {
+    height: 148px; }
+  #promo-menu {
     display: none; } }
 
 body {
   margin: 0;
-  font-family: Helvetica, sans-serif; }
+  font-family: Helvetica, sans-serif;
+  width: 100%;
+  overflow: hidden; }
+
+a {
+  text-decoration: inherit;
+  font-style: inherit;
+  color: inherit; }
+
 
 #promotions {
-  clear: both; }
+  clear: both;
+  text-align: center; }
+  #promotions .promo {
+    color: white; }
+
+@media screen and (max-width: 768px) {
+  #promotions {
+    width: 100%;
+    margin-left: 100%;
+    transition: all .5s;
+    height: 0%; }
+    #promotions.visible {
+      margin-left: 0;
+      height: 100%; }
+  .promo {
+    background-color: #C244C2;
+    border-bottom: 1px solid white; }
+    .promo h4 {
+      font-size: 36px;
+      margin: 0;
+      padding: 24px; }
+    .promo img {
+      display: none; }
+    .promo :active {
+      transition: all .4s;
+      background-color: white;
+      color: #C244C2; } }
+
+@media screen and (min-width: 769px) {
+  #promotions {
+    width: 100%;
+    margin: -148px 0 0 148px; }
+    #promotions .promo {
+      float: left;
+      height: 148px; } }

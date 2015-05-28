@@ -1,10 +1,54 @@
 #promotions {
     clear: both;
+    text-align: center;
 
     .promo {
+        color: white;
+    }
+}
+
+@media screen and (max-width : 768px) {
+    #promotions {
+        width: 100%;
+        margin-left: 100%;
+        transition: all .5s;
+        height: 0%;
+
+        &.visible {
+            margin-left: 0;
+            height: 100%;
+        }
+    }
+
+    .promo {
+        background-color: #C244C2;
+        border-bottom: 1px solid white;
 
         h4 {
-            
+            font-size: 36px;
+            margin: 0;
+            padding: 24px;
         }
+
+        img {
+            display: none;
+        }
+
+        :active {
+            transition: all .4s;
+            background-color: white;
+            color: #C244C2;
+        }
+    }
+}
+@media screen and (min-width : 769px) {
+    #promotions {
+        width: 100%;
+        margin: -148px 0 0 148px;
+        
+        .promo {
+            float: left;
+            height: 148px;
+        }   
     }
 }

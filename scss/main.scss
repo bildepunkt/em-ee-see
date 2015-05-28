@@ -1,4 +1,16 @@
 body {
     margin: 0;
     font-family: Helvetica, sans-serif;
+    width: 100%;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: inherit;
+    font-style: inherit;
+    color: inherit;
+}
+
+a:link, a:visited {
+    
 }

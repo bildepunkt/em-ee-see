@@ -3,7 +3,9 @@
   height: 36px;
   width: 36px;
   position: relative;
-  display: block; }
+  display: block;
+  -webkit-transform: scale(1);
+  transform: scale(1); }
   .burger .parts {
     position: absolute;
     display: block;
@@ -18,3 +20,8 @@
     top: 33.3%; }
   .burger .bottom {
     top: 66.6%; }
+
+.burger:active {
+  transition: all .3s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2); }
