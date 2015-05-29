@@ -29,12 +29,11 @@ $(document).ready(function() {
 
         for(var i = 0, len = data.promotions.length; i < len; i += 1) {
             promoData = data.promotions[i];
-            console.log(promoData);
+            //console.log(promoData);
             new PromoView(template, promoData).render($target);
         }
 
-        // after .promos have populated
+        // AFTER .promos have populated
         new PromotionsView();
     });
-
 });

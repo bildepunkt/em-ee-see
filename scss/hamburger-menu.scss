@@ -1,7 +1,7 @@
 .burger {
     float: left;
-    height: 36px;
-    width: 36px;
+    height: 30px;
+    width: 30px;
     position: relative;
     display: block;
     transform: scale(1);
@@ -30,6 +30,6 @@
 }
 
 .burger:active {
-    transition: all .3s;
+    transition: all .1s;
     transform: scale(1.2);
 }

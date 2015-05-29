@@ -1,6 +1,6 @@
-<div class="promo">
-    <a href="{{web_url}}" target="{{open_new_tab}}">
-        <img src="{{image_url}}" alt="">
+<a class="promo" href="{{web_url}}" target="{{open_new_tab}}">
+    <div class="promo-image" style="background-image: url('{{image_url}}')"></div>
+    <div class="label">
         <h4>{{label}}</h4>
-    </a>
-</div>
+    </div>
+</a>

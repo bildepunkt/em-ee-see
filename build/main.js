@@ -1,6 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var jQuery = $ = require('jquery');
 
+/**
+ * controller for the promo menu btn
+ * @class PromoMenu
+ * @author Chris Peters
+ */
 var PromoMenu = function() {
     this.$el = $('#promo-menu');
     this.$promotions = $('#promotions');
@@ -8,6 +13,9 @@ var PromoMenu = function() {
     this.$el.on('click', $.proxy(this.clickHandler, this));
 };
 
+/**
+ * @method clickHandler
+ */
 PromoMenu.prototype.clickHandler = function(e) {
     this.$promotions.toggleClass('visible');
 };
@@ -45,14 +53,13 @@ $(document).ready(function() {
 
         for(var i = 0, len = data.promotions.length; i < len; i += 1) {
             promoData = data.promotions[i];
-            console.log(promoData);
+            //console.log(promoData);
             new PromoView(template, promoData).render($target);
         }
 
-        // after .promos have populated
+        // AFTER .promos have populated
         new PromotionsView();
     });
-
 });
 },{"./controller/promo-menu":1,"./view/promo":3,"./view/promotions":4,"jquery":5}],3:[function(require,module,exports){
 var jQuery = $ = require('jquery');
@@ -62,6 +69,7 @@ var Mustache = require('mustache');
  * @class Promo
  * @param {string} template - the template markup
  * @param {object} data - the data
+ * @author Chris Peters
  */
 var Promo = function(template, data) {
     data.open_new_tab = data.open_new_tab ? '_blank' : '';
@@ -71,6 +79,7 @@ var Promo = function(template, data) {
 /**
  * @method render
  * @param {object} $target - the jQuery wrapped object
+ * @author Chris Peters
  */
 Promo.prototype.render = function($target) {
     $target.append(this.rendered);
@@ -80,17 +89,22 @@ module.exports = Promo;
 },{"jquery":5,"mustache":6}],4:[function(require,module,exports){
 var jQuery = $ = require('jquery');
 
+// private
+var $win = $(window);
+
 /**
  * @class View
  * @param {string} template - the template markup
  * @param {object} data - the data
+ * @author Chris Peters
  */
-var $win = $(window);
-
 var Promotions = function() {
     this.$el = $('#promotions');
     this.$promos = this.$el.find('.promo');
-    this.desktopLogoSize = 148;
+    this.tabletWidth = 768;
+    this.desktopWidth = 1024;
+    this.tabletLogoSize = 100;
+    this.desktopLogoSize = 152;
     this.promoCount = this.$promos.length;
 
     $win.on('resize', $.proxy(this.resizeHandler, this));
@@ -98,49 +112,38 @@ var Promotions = function() {
     this.resizeHandler();
 };
 
+/**
+ * resizes promo images with/without margins based on screen width
+ * @method resizeHandler
+ * @author Chris Peters
+ */
 Promotions.prototype.resizeHandler = function() {
     var self = this;
     var winWidth = $win.width();
+    var marginWidth = (winWidth <= this.desktopWidth ? 18 : 0); 
     var promotionsWidth;
     var promoWidth;
-    var $this;
-    var $img;
-    var img;
-    var scaleFactor;
 
-    this.$el.hide();
-
-    if (winWidth < 768) {
+    if (winWidth < this.tabletWidth) {
         this.$promos.each(function() {
-            $(this).css('width', '100%');
+            $(this).css({
+                width: '100%',
+                marginLeft: 0
+            });
         });
     } else {
-        promotionsWidth = winWidth - this.desktopLogoSize;
-        promoWidth = promotionsWidth / this.promoCount;
+        promotionsWidth = winWidth - (winWidth <= this.desktopWidth ? this.tabletLogoSize : this.desktopLogoSize);
+        promoWidth = promotionsWidth / this.promoCount - marginWidth;
 
         this.$promos.each(function() {
-            $this = $(this);
-            $this.css('width', promoWidth + 'px');
-
-            $img = $this.find('img');
-            img = $img[0];
-            if (img.width === 0) {
-                img.onload = function() {
-                    this.width = promoWidth;
-                };
-            } else {
-                self.setImageDimensions($img, promoWidth);
-            }
+            $(this).css({
+                marginLeft: marginWidth + 'px',
+                width: promoWidth + 'px'
+            }).find('.promo-image').css({
+                backgroundSize: promoWidth + 'px'
+            });
         });
     }
-
-    this.$el.fadeIn('fast');
-};
-
-Promotions.prototype.setImageDimensions = function($img, promoWidth) {
-    $img.attr({
-        width: promoWidth
-    });
 };
 
 module.exports = Promotions;
