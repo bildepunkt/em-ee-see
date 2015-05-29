@@ -1,0 +1,72 @@
+#promotions {
+  clear: both;
+  text-align: center; }
+  #promotions .promo {
+    color: white;
+    display: block;
+    position: relative; }
+    #promotions .promo .promo-image {
+      background-repeat: no-repeat;
+      opacity: 1; }
+
+@media screen and (max-width: 768px) {
+  #promotions {
+    width: 100%;
+    margin-left: 100%;
+    transition: all .5s;
+    height: 0%; }
+    #promotions.visible {
+      margin-left: 0;
+      height: 100%; }
+  .promo {
+    background-color: #09c;
+    border-bottom: 1px solid white; }
+    .promo .promo-image {
+      background-image: none !important; }
+    .promo h4 {
+      font-size: 26px;
+      margin: 0;
+      padding: 22px; }
+    .promo :active {
+      transition: all .4s;
+      background-color: white;
+      color: #09c; } }
+
+@media screen and (min-width: 769px) {
+  #promotions {
+    width: 100%;
+    margin: -100px 0 0 100px; }
+    #promotions .promo {
+      float: left;
+      height: 100px; }
+      #promotions .promo .promo-image {
+        width: 100%;
+        height: 100%;
+        background-position: top left;
+        transition: all .4s; }
+        #promotions .promo .promo-image:hover {
+          opacity: 0.6; }
+      #promotions .promo .label {
+        position: absolute;
+        bottom: 0;
+        width: 100%; }
+      #promotions .promo h4 {
+        font-size: 14px;
+        margin: 0;
+        text-shadow: 0 0 4px #000;
+        padding: 4px 0; } }
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  #promotions .promo .promo-image {
+    opacity: 0.8;
+    background-position: top left; } }
+
+@media screen and (min-width: 1025px) {
+  #promotions {
+    margin: -152px 0 0 152px; }
+    #promotions .promo {
+      height: 152px; }
+      #promotions .promo .promo-image {
+        background-position: 50%; }
+      #promotions .promo h4 {
+        display: none; } }
